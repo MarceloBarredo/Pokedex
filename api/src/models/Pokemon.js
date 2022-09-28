@@ -38,8 +38,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.ENUM("poison", "rock", "water", "dragon", "flying", "ghost", "electric", "fairy", "normal", "steel", "ice", "shadow", "fighting", "fire", "psychic", "unknown", "ground", "bug", "grass", "dark"),
-        // allowNull: false,
+        type: DataTypes.ENUM("Poison", "Rock", "Water", "Dragon", "Flying", "Ghost", "Electric", "Fairy", "Normal", "Steel", "Ice", "Shadow", "Fighting", "Fire", "Psychic", "Unknown", "Ground", "Bug", "Grass", "Dark"),
+      },
+      image: {
+        type:DataTypes.STRING,
+        defaultValue: "No Image"
       },
       selfMade: {
         type: DataTypes.BOOLEAN,

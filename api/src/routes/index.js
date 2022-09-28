@@ -32,23 +32,6 @@ const getApiPokemonUrlData = async () => {
             type: pokemonApiURLinfo.types.map(t => t.type.name)
         });
     }
-    
-    // allPokemonsApiData.forEach( async pokemon => {
-    //     await Pokemon.findOrCreate({
-    //         where: {
-    //             // id: pokemon.id,
-    //             name: pokemon.name,
-    //             life: pokemon.life,
-    //             attack: pokemon.attack,
-    //             defense: pokemon.defense,
-    //             speed: pokemon.speed,
-    //             height: pokemon.height,
-    //             weight: pokemon.weight,
-    //             // type: pokemon.type.forEach(e => e)
-    //         }
-    //     })    
-    // });
-
     return allPokemonsApiData
 }
 
