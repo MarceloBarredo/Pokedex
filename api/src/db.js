@@ -34,8 +34,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Pokemon, Type } = sequelize.models;
 
 // Genero las relaciones entre tablas, Sequelize nos provee 4 tipos, en este caso usamos "BelongsToMany".
-Pokemon.belongsToMany(Type, {through: "PokemonXType"}); //Creamos la tabla intermedia "PokemonXType"
-Type.belongsToMany(Pokemon, {through: "PokemonXType"});
+Type.belongsToMany(Pokemon, {through: "Pokemon_Type", timestamps: false});
+Pokemon.belongsToMany(Type, {through: "Pokemon_Type", timestamps: false});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

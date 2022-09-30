@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import PokemonCreate from './components/PokemonCreate';
-// import Details from './components/Details';
+import Details from './components/Details';
 
 function App() {
   return (
@@ -11,9 +11,9 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path='/' component={LandingPage}/>
-        <Route path='/home' component={Home}/>
-        <Route path='/pokemons' component={PokemonCreate}/>
-        {/* <Route path='/home/:id' component={Details}/> */}
+        <Route path='/home' render={() => <Home/>}/> {/* Sintaxis que permite cargar props al component. */}
+        <Route path='/pokemons' component={PokemonCreate} sensitive={true}/>
+        <Route path='/home/:id' component={Details}/>
       </Switch>
     </div>
     </BrowserRouter>

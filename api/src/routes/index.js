@@ -1,19 +1,12 @@
 
 const axios = require('axios');
 const { Router } = require('express');
-const { Pokemon, Type } = require('../db');
-
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
+const { Pokemon, Type } = require('../db.js');
 
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-
-//Traigo la información de la API, solo la que me interesa.
 const getApiPokemonUrlData = async () => {
-    let infoAPI = await axios.get('https://pokeapi.co/api/v2/pokemon');
+    let infoAPI = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40&offset=0');
     let infoAPIData = await infoAPI.data.results.map( e => e.url);
     let allPokemonsApiData = []
     for (let i = 0; i < infoAPIData.length; i++) {
@@ -35,7 +28,6 @@ const getApiPokemonUrlData = async () => {
     return allPokemonsApiData
 }
 
-// Traemos toda la info de la DB.
 var getDbPokemonData = async () => {
     return await Pokemon.findAll({
         include: {
@@ -48,11 +40,30 @@ var getDbPokemonData = async () => {
     })
 }
 
-// Concatenamos la info de la API con la DB.
 var getAllCharacters = async () => {
     let infoAPI = await getApiPokemonUrlData();
     let infoDB = await getDbPokemonData();
     let infoTotal = infoAPI.concat(infoDB);
+
+    // console.log(infoTotal)
+
+    // infoTotal.forEach( async pokeApiDB => {
+    //     await Pokemon.findOrCreate({
+    //         where: {
+    //             id: pokeApiDB.id,
+    //             name: pokeApiDB.name,
+    //             image: pokeApiDB.image,
+    //             life: pokeApiDB.life,
+    //             attack: pokeApiDB.attack,
+    //             defense: pokeApiDB.defense,
+    //             speed: pokeApiDB.speed,
+    //             height: pokeApiDB.height,
+    //             weight: pokeApiDB.weight,
+    //             type: pokeApiDB.type
+    //         }
+    //     })    
+    // });
+
     return infoTotal;
 }
 
@@ -98,15 +109,24 @@ router.get("/pokemons/:id", async (req, res) => {
 });
 
 router.post("/pokemons", async (req, res) => {
+
     let {name, image, life, attack, defense, speed, height, weight, type, selfMade} = req.body;
     let pokemonAdded = await Pokemon.create({
-        name, image, life, attack, defense, speed, height, weight, type, selfMade
+        name,
+        image,
+        life,
+        attack,
+        defense,
+        speed,
+        height,
+        weight,
+        selfMade
     });
 
     let pokemonTypeToDB = await Type.findAll({
         where: {name: type}
     });
-
+    
     pokemonAdded.addType(pokemonTypeToDB)
     res.send("Pokemon cargado con éxito!")
 });

@@ -1,7 +1,8 @@
 const initialState = {
     pokemons: [],
     allPokemons: [],
-    types: []
+    types: [],
+    detail: []
 }
 
 function rootReducer (state = initialState, action) {
@@ -54,7 +55,11 @@ function rootReducer (state = initialState, action) {
             const allPokemons = state.allPokemons
             const typeFilter = action.payload === 'all' 
             ? allPokemons 
-            : allPokemons.filter( p => p.type[0] === action.payload)
+            : allPokemons.filter( p => {
+                if(p.type) return p.type.includes(action.payload)
+                else return p.Types.includes(action.payload)
+            })
+
             return {
                 ...state,
                 pokemons: typeFilter
@@ -62,7 +67,7 @@ function rootReducer (state = initialState, action) {
 
         case 'POST_CHARACTER':
             return {
-
+                ...state,
             }
 
         case 'FILTER_BY_CREATION':
@@ -75,6 +80,12 @@ function rootReducer (state = initialState, action) {
                 ? allPokemons 
                 : creationFilter
             } 
+        
+        case 'GET_DETAILS':
+            return{
+                ...state,
+                detail: action.payload
+            }
 
         default: 
             return state;

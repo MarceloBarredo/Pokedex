@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -99,10 +100,15 @@ export default function Home () {
                 <SearchBar/>
 
                 {currentPokemons?.map( (p) => {
+
+                    let tipo = []
+                    if(typeof p.id === 'number') tipo = p.type
+                    else tipo = p.Types.map( t => t.name)
+
                     return (
-                        <div className='cartas'>
+                        <div key={p.name} className='cartas'>
                         <Link to={"/pokemons" + p.id}>
-                            <Card key={p.id.toString()} name={p.name} image={p.image} type={p.type}/>
+                            <Card key={p.id.toString()} name={p.name} image={p.image} type={tipo}/>
                         </Link>
                         </div>
                     ) 

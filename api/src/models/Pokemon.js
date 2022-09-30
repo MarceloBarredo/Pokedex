@@ -1,14 +1,13 @@
 const { DataTypes } = require('sequelize');
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
 module.exports = (sequelize) => {
-// Defino el modelo
+
   sequelize.define('Pokemon', {
       id: {
-        type: DataTypes.UUID, //UUID genera numero random con letras y numeros, va a ser unico e irrepetible.
+        type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false, //Dato obligatorio.
-        primaryKey: true // Refiere a que "id" sera la clave primaria.
+        allowNull: false,
+        primaryKey: true
       },
       name: {
         type: DataTypes.STRING,
@@ -28,6 +27,7 @@ module.exports = (sequelize) => {
       },
       speed: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
       height: {
         type: DataTypes.INTEGER,
@@ -37,12 +37,9 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      type: {
-        type: DataTypes.ENUM("Poison", "Rock", "Water", "Dragon", "Flying", "Ghost", "Electric", "Fairy", "Normal", "Steel", "Ice", "Shadow", "Fighting", "Fire", "Psychic", "Unknown", "Ground", "Bug", "Grass", "Dark"),
-      },
       image: {
         type:DataTypes.STRING,
-        defaultValue: "No Image"
+        defaultValue: "No Image",
       },
       selfMade: {
         type: DataTypes.BOOLEAN,
@@ -50,6 +47,7 @@ module.exports = (sequelize) => {
         defaultValue: true,
       }
     }, {
-      freezeTableName: true
+      freezeTableName: true,
+      timestamps: false,
   });
 };

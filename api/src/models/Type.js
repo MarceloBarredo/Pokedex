@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize');
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
 module.exports = (sequelize) => {
-// Defino el modelo
     sequelize.define('Type', {
         name: {
-        type: DataTypes.STRING,
+            type: DataTypes.ENUM,
+            values: ["poison", "rock", "water", "dragon", "flying", "ghost", "electric", "fairy", "normal", "steel", "ice", "shadow", "fighting", "fire", "psychic", "unknown", "ground", "bug", "grass", "dark"],
         }
     }, {
-        freezeTableName: true // Para evitar la auto-pluralizacion de los modelos.
+        freezeTableName: true,
+        timestamps: false
     });
 };
